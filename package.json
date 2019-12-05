@@ -1,0 +1,22 @@
+{
+  "name": "zeno",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yiwewang/Zeno.git"
+  },
+  "author": "yiwen.wang",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yiwewang/Zeno/issues"
+  },
+  "homepage": "https://github.com/yiwewang/Zeno#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
