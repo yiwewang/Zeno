@@ -1,23 +1,18 @@
 {
   "name": "zeno",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "start": "node index.js",
-    "test": "Not Yet"
+    "start": "node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/yiwewang/Zeno.git"
-  },
-  "author": "yiwen.wang",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/yiwewang/Zeno/issues"
-  },
-  "homepage": "https://github.com/yiwewang/Zeno#readme",
   "dependencies": {
-    "express": "^4.17.1"
+    "body-parser": "^1.19.0",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "ejs": "^3.0.1",
+    "express": "^4.16.4",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
   }
 }
