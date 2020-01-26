@@ -5,30 +5,34 @@ const bodyParser = require('body-parser')
 const mongoClient = require('mongodb').MongoClient
 const url = 'mongodb://localhost/Expense'
 
-app.use(bodyParser.urlencoded({extended: true}))
+app.use(bodyParser.urlencoded({extended: true})) //middle-ware
 app.use(express.static('public'))
 app.set('view engine','ejs')
 
+var collection;
 mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
-	if(err) {console.log('Unable to connect to DB server', err)}
-	else{
-		//read from db
-		const db = client.db('Zeno');
-		const collection = db.collection('expenses');
-		collection.find({}).toArray(function(err, expenses){
-			expenses.forEach(function(expense){
-				console.log(expense.item + " " + expense.amount);
-			});
+	if(err) { return console.log('Unable to connect to DB server', err)}
+	//read from db
+	const db = client.db('Zeno');
+	collection = db.collection('expenses');
+	collection.find({}).toArray(function(err, expenses){
+
+		expenses.forEach(function(expense){
+			console.log(expense.item + " " + expense.amount);
 		});
-	};
+	});
+	app.listen(port, () => console.log(`Zeno listening on port ${port}!`))
 });
 
 app.get('/', (req, res) => res.render('index'))
-app.post('/', function (req, res) {
-  //console.log(req.body);
-  res.render('index');  
+app.post('/expense', function (req, res) {
+  	collection.insertOne(req.body, (err, result) => {
+  		if (err) return console.log(err);
+  		console.log('save to db.');
+  		res.redirect('/');
+  	});
 })
-app.listen(port, () => console.log(`Zeno listening on port ${port}!`))
+
 
 
 

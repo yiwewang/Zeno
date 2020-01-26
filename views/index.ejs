@@ -1,21 +1,37 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <title>Test</title>
-    <link rel="stylesheet" type="text/css" href="/css/style.css">
-    <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
-  </head>
-  <body>
-    <div class="container">
-      <fieldset>
-        <form action="/" method="post">
-          <input name="item" type="text" class="ghost-input" placeholder="Item" required>
-          <input name="category" type="text" class="ghost-input" placeholder="Category" required>
-          <input name="amount" type="text" class="ghost-input" placeholder="Amount" required>
-          <input type="submit" class="ghost-button" value="Submit">
-        </form>
-      </fieldset>
-    </div>
-  </body>
+<head>
+  <meta charset="utf-8">
+  <title>Test</title>
+  <link rel="stylesheet" type="text/css" href="/css/style.css">
+  <link href='https://fonts.googleapis.com/css?family=Open+Sans:300' rel='stylesheet' type='text/css'>
+</head>
+<body>
+  <div class="container">
+    <fieldset>
+      <form action="/expense" method="post">
+        <input name="item" type="text" class="ghost-input" placeholder="Item" required>
+        <select name="category" class="ghost-input" id="category-select">
+          <option disabled selected value>Category</option>
+          <option value="grocery">Groceries</option>
+          <option value="restaurant">Restaurant</option>
+          <option value="clothes">Clothes</option>
+          <option value="other-shopping">Other Shopping</option>
+          <option value="transportation">Transportation</option>
+          <option value="entertainment">Entertainment</option>
+          <option value="medical">Medical</option>
+          <option value="travel">Travel</option>
+          <option value="personal-care">Personal Care</option>
+          <option value="pet">Pet</option>
+        </select>
+        <input name="amount" type="number" class="ghost-input" placeholder="Amount" required>
+        <input name="tag" type="text" class="ghost-input" placeholder="Tag">
+        <input name="Date" type="date" class="ghost-input" placeholder="Date" required>
+        <input type="submit" class="ghost-button" value="Submit">
+      </form>
+    </fieldset>
+  </div>
+</body>
 </html>
+
+
