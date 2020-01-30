@@ -9,7 +9,7 @@
 <body>
   <div class="container">
     <fieldset>
-      <form action="/expense" method="post">
+      <form action="/expense" method="post" autocomplete="on">
         <input name="item" type="text" class="ghost-input" placeholder="Item" required>
         <select name="category" class="ghost-input" id="category-select">
           <option disabled selected value>Category</option>
@@ -25,8 +25,8 @@
           <option value="pet">Pet</option>
         </select>
         <input name="amount" type="number" class="ghost-input" placeholder="Amount" required>
-        <input name="tag" type="text" class="ghost-input" placeholder="Tag">
-        <input name="Date" type="date" class="ghost-input" placeholder="Date" required>
+        <input name="tag" type="text" class="ghost-input" placeholder="Tag" multiple>
+        <input name="date" type="date" class="ghost-input" placeholder="Date" required>
         <input type="submit" class="ghost-button" value="Submit">
       </form>
     </fieldset>

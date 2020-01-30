@@ -1,15 +1,13 @@
 const express = require('express')
 const app = express()
-const port = 9000
+const port = 3000
 const bodyParser = require('body-parser')
 const mongoClient = require('mongodb').MongoClient
 const url = 'mongodb://localhost/Expense'
-const cors = require("cors");
 
 app.use(bodyParser.urlencoded({extended: true})) //middle-ware
 app.use(express.static('public'))
 app.set('view engine','ejs')
-app.use(cors());
 
 var collection;
 mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
@@ -23,15 +21,25 @@ mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
 	// 		console.log(expense.item + " " + expense.amount);
 	// 	});
 	// });
-	app.listen(port, () => console.log(`Zeno is - listening on port ${port}!`))
+	app.listen(port, () => console.log(`Zeno listening on port ${port}!`))
 });
 
 app.get('/', (req, res) => res.render('index'))
 app.post('/expense', function (req, res) {
-	console.log('change???');
-  	collection.insertOne(req.body, (err, result) => {
+	//construct schema for expense
+	const request = req.body;
+	var tag = request.tag.toString().split(";");
+	const expense = {
+		item: request.item,
+		category: request.category,
+		amount : request.amount,
+		date: request.date,
+		tag: tag
+	};
+  	
+  	collection.insertOne(expense, (err, result) => {
   		if (err) return console.log(err);
-  		console.log(req.body + "----" + result);
+  		console.log(result.ops);
   		res.redirect('/');
   	});
 })
