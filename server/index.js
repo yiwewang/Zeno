@@ -1,9 +1,10 @@
 const express = require('express')
 const app = express()
-const port = 3000
+const port = 3001
 const bodyParser = require('body-parser')
 const mongoClient = require('mongodb').MongoClient
 const url = 'mongodb://localhost/Expense'
+const cors = require('cors');
 
 app.use(bodyParser.urlencoded({extended: true})) //middle-ware
 app.use(express.static('public'))
@@ -12,9 +13,10 @@ app.set('view engine','ejs')
 var collection;
 mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
 	if(err) { return console.log('Unable to connect to DB server', err)}
-	//read from db
+	
 	const db = client.db('Zeno');
 	collection = db.collection('expenses');
+	//read from db
 	// collection.find({}).toArray(function(err, expenses){
 
 	// 	expenses.forEach(function(expense){
@@ -25,9 +27,13 @@ mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
 });
 
 app.get('/', (req, res) => res.render('index'))
+app.get('/testAPI', (req, res) => {
+  res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
+});
 app.post('/expense', function (req, res) {
 	//construct schema for expense
 	const request = req.body;
+	// console.log(new Date(request.date).getFullYear());  -- use Date 
 	var tag = request.tag.toString().split(";");
 	const expense = {
 		item: request.item,
