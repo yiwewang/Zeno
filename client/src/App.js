@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import './styles.css';
+import './App.css';
 import ExpenseForm from './Components/ExpenseForm';
 
 

@@ -24,7 +24,7 @@ class ExpenseForm extends Component{
 		return (
 			<form onSubmit={this.handleSubmit}>
         
-          <input placeholder="Item" type="text" ref={this.state.item} />
+          <input placeholder="Item" class="ghost-input" type="text" ref={this.state.item} />
           <select name="category" class="ghost-input" id="category-select">
 	          <option disabled selected value>Category</option>
 	          <option value="grocery">Groceries</option>
@@ -39,11 +39,11 @@ class ExpenseForm extends Component{
 	          <option value="pet">Pet</option>
 	          <option value="fine">Fine</option>
 	        </select>
-          <input placeholder="Amount" type="number" ref={this.state.amount} />
-          <input placeholder="Tag" type="text" ref={this.state.tag} />
-          <input placeholder="Date" type="date" ref={this.state.date} />
+          <input placeholder="Amount" class="ghost-input" type="number" ref={this.state.amount} />
+          <input placeholder="Tag" class="ghost-input" type="text" ref={this.state.tag} />
+          <input placeholder="Date" class="ghost-input" type="date" ref={this.state.date} />
         
-        <input type="submit" value="Submit" />
+        <input type="submit" class="ghost-button" value="Submit" />
       </form>
 		);
 	}
