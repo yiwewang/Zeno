@@ -7,6 +7,7 @@ const url = 'mongodb://localhost/Expense'
 const cors = require('cors');
 
 app.use(bodyParser.urlencoded({extended: true})) //middle-ware
+app.use(bodyParser.json());
 app.use(express.static('public'))
 app.set('view engine','ejs')
 
@@ -28,47 +29,27 @@ mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
 
 app.get('/', (req, res) => res.render('index'))
 app.get('/testAPI', (req, res) => {
-  // res.send({ express: 'YOUR EXPRESS BACKEND IS CONNECTED TO REACT' });
-  //construct schema for expense
-	const request = req.body;
-	// console.log(new Date(request.date).getFullYear());  -- use Date 
-	var tag = request.tag.toString().split(";");
-	const expense = {
-		item: request.item,
-		category: request.category,
-		amount : request.amount,
-		date: request.date,
-		tag: tag
-	};
-  	
-  	collection.insertOne(expense, (err, result) => {
-  		if (err) return console.log(err);
-  		console.log(result.ops);
-  		res.redirect('/testAPI');
-  	});
+
 });
-app.post('/expense', function (req, res) {
+app.post('/api/form', function (req, res) {
 	//construct schema for expense
 	const request = req.body;
+	console.log(request);
 	// console.log(new Date(request.date).getFullYear());  -- use Date 
-	var tag = request.tag.toString().split(";");
-	const expense = {
-		item: request.item,
-		category: request.category,
-		amount : request.amount,
-		date: request.date,
-		tag: tag
-	};
+
+	// var tag = request.tag.toString().split(";");
+	// const expense = {
+	// 	item: request.item,
+	// 	category: request.category,
+	// 	amount : request.amount,
+	// 	date: request.date,
+	// 	tag: tag
+	// };
   	
-  	collection.insertOne(expense, (err, result) => {
-  		if (err) return console.log(err);
-  		console.log(result.ops);
-  		res.redirect('/');
-  	});
+ //  	collection.insertOne(expense, (err, result) => {
+ //  		if (err) return console.log(err);
+ //  		console.log(result.ops);
+ //  		res.redirect('/');
+ //  	});
 })
-
-
-
-
-
 
