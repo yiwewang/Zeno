@@ -51,5 +51,6 @@ app.post('/api/form', function (req, res) {
  //  		console.log(result.ops);
  //  		res.redirect('/');
  //  	});
+ 	res.json("we got your request!")
 })
 

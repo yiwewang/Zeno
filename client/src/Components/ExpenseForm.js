@@ -3,64 +3,81 @@ import React, {Component} from "react";
 class ExpenseForm extends Component{
 
 	constructor() {
-    super();
-    this.state = {
-		item: '',
-		category: [],
-		amount: '',
-		tag: [],
-		date: ''
-	};
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleInputChange = this.handleInputChange.bind(this);
-  }
+		super();
+		this.state = {
+			item: '',
+			categories: ["Groceries", "Restaurant", "Clothes", "Other Shopping", "Transportation", "Entertainment", "Medical", "Travel", "Personal Care", "Pet", "Fine"],
+			amount: '',
+			tag: [],
+			date: '',
+			category: ''
+		};
+		this.handleSubmit = this.handleSubmit.bind(this);
+		this.handleInputChange = this.handleInputChange.bind(this);
+	}
+
 	
   	handleInputChange(event) {
 	    const target = event.target;
-	    const value = target.type === 'checkbox' ? target.checked : target.value;
     	const name = target.name;
+	    const value = target.value;
+
     	console.log(value + "  value");
 	    this.setState({
-	      [name]: value
+	      [name]: value,
 	    });
-	  }
+	}
 
-	handleSubmit = (event) => {
+
+
+
+	handleSubmit(event) {
 		event.preventDefault();
 		console.log(this.state.item + '     data');
 		fetch('/api/form', {
 			method: 'POST',
-			headers: {     'Accept': 'application/json',     'Content-Type': 'application/json',   },
+			headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
 			body: JSON.stringify(this.state)
-		});
+		})
+      .then(res => res.json())
+      .then(
+        (result) => {
+          console.log("success!!!")
+          console.log(result)
+          this.setState({
+          	item: '',
+			amount: '',
+			tag: [],
+			date: '',
+			category: ''
+          })
+
+        },
+        (error) => {
+          console.log("error")
+          console.log(error)
+        }
+      );
 	}
 
 	render() {
-
-		const ref = React.createRef();
 		return (
 			<form onSubmit={this.handleSubmit}>
 
-			<input placeholder="Item" className="ghost-input" type="text" name="item" value={this.state.item} onChange={this.handleInputChange}  />
-			<select name="category" class="ghost-input" id="category-select" >
-			<option disabled selected value>Category</option>
-			<option value="grocery">Groceries</option>
-			<option value="restaurant">Restaurant</option>
-			<option value="clothes">Clothes</option>
-			<option value="other-shopping">Other Shopping</option>
-			<option value="transportation">Transportation</option>
-			<option value="entertainment">Entertainment</option>
-			<option value="medical">Medical</option>
-			<option value="travel">Travel</option>
-			<option value="personal-care">Personal Care</option>
-			<option value="pet">Pet</option>
-			<option value="fine">Fine</option>
-			</select>
-			<input placeholder="Amount" class="ghost-input" type="number" ref={this.state.amount} />
-			<input placeholder="Tag" class="ghost-input" type="text" ref={this.state.tag} />
-			<input placeholder="Date" class="ghost-input" type="date" ref={this.state.date} />
+				<input placeholder="Item" className="ghost-input" type="text" name="item" value={this.state.item} onChange={this.handleInputChange}  />
+				<select onChange={({ target }) => { this.setState({ category: target.value }) }} name="category" className="ghost-input" id="category-select" value={this.state.category} >
+					<option disabled value="">Category</option>
+					{
+						this.state.categories.map((category, i) => {
+							return <option key={i} value={category}>{category}</option>
+						})
+					}
+				</select>
+				<input onChange={this.handleInputChange} placeholder="Amount" name="amount" className="ghost-input" type="number" value={this.state.amount} />
+				<input onChange={this.handleInputChange} placeholder="Tag" name="tag" className="ghost-input" type="text" value={this.state.tag} />
+				<input onChange={this.handleInputChange} placeholder="Date" name="date" className="ghost-input" type="date" value={this.state.date} />
 
-			<input type="submit" class="ghost-button" value="Submit" />
+				<input type="submit" className="ghost-button" value="Submit" />
 			</form>
 			);
 		}
