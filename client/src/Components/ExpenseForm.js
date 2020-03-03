@@ -62,7 +62,7 @@ class ExpenseForm extends Component{
 
 	render() {
 		return (
-			<form onSubmit={this.handleSubmit}>
+			<form className="expense-form" onSubmit={this.handleSubmit}>
 
 				<input placeholder="Item" className="ghost-input" type="text" name="item" value={this.state.item} onChange={this.handleInputChange}  />
 				<select onChange={({ target }) => { this.setState({ category: target.value }) }} name="category" className="ghost-input" id="category-select" value={this.state.category} >
