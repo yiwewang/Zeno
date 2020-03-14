@@ -4,12 +4,14 @@ const port = 3001
 const bodyParser = require('body-parser')
 const mongoClient = require('mongodb').MongoClient
 const url = 'mongodb://localhost/Expense'
-const cors = require('cors');
+const cors = require('cors')
+const routes = require('./routes')
 
 app.use(bodyParser.urlencoded({extended: true})) //middle-ware
 app.use(bodyParser.json());
 app.use(express.static('public'))
 app.set('view engine','ejs')
+app.use('/', routes)
 
 var collection;
 mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
@@ -27,11 +29,9 @@ mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
 	app.listen(port, () => console.log(`Zeno listening on port ${port}!`))
 });
 
-app.get('/', (req, res) => res.render('index'))
-app.get('/testAPI', (req, res) => {
+// app.get('/', (req, res) => res.render('index'))
 
-});
-app.post('/api/form', function (req, res) {
+app.post('/form', function (req, res) {
 	//construct schema for expense
 	const request = req.body;
 	console.log(request);

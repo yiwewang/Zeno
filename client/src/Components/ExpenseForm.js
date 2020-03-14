@@ -34,7 +34,7 @@ class ExpenseForm extends Component{
 	handleSubmit(event) {
 		event.preventDefault();
 		console.log(this.state.item + '     data');
-		fetch('/api/form', {
+		fetch('/form', {
 			method: 'POST',
 			headers: {'Accept': 'application/json', 'Content-Type': 'application/json',},
 			body: JSON.stringify(this.state)
