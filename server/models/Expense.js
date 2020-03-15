@@ -5,13 +5,13 @@ var ExpenseSchema = new Schema({
 	item: String,
 	category: String,
 	amount: Number,
-	tags: [String],
+	tags: [{type: String}],
 	date: {
 		type: Date,
 		defaut: Date.now
 	}
-},{
-	collection:'Expenses'
+}, {
+    collection: 'expenses'  
 });
 
-mongoose.model('Expense', ExpenseSchema);
+module.exports = mongoose.model('Expense', ExpenseSchema);

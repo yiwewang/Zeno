@@ -1,9 +1,12 @@
+
 const express = require('express')
 const app = express()
 const port = 3001
 const bodyParser = require('body-parser')
 const mongoClient = require('mongodb').MongoClient
-const url = 'mongodb://localhost/Expense'
+const mongoose = require('mongoose')
+
+const url = 'mongodb://localhost/Zeno'
 const cors = require('cors')
 const routes = require('./routes')
 
@@ -14,43 +17,23 @@ app.set('view engine','ejs')
 app.use('/', routes)
 
 var collection;
-mongoClient.connect(url, {useUnifiedTopology: true},function(err, client){
-	if(err) { return console.log('Unable to connect to DB server', err)}
-	
-	const db = client.db('Zeno');
-	collection = db.collection('expenses');
-	//read from db
-	// collection.find({}).toArray(function(err, expenses){
 
-	// 	expenses.forEach(function(expense){
-	// 		console.log(expense.item + " " + expense.amount);
-	// 	});
-	// });
-	app.listen(port, () => console.log(`Zeno listening on port ${port}!`))
-});
 
-// app.get('/', (req, res) => res.render('index'))
+mongoose.connect(url, { useUnifiedTopology: true, useNewUrlParser: true})
+const connection = mongoose.connection
+connection.on('error', err => {
+  console.error('connection error:', err)
+})
+connection.once('open', _ => {
+  console.log('Database connected:', url)
 
-app.post('/form', function (req, res) {
-	//construct schema for expense
-	const request = req.body;
-	console.log(request);
-	// console.log(new Date(request.date).getFullYear());  -- use Date 
+  collection = connection.db.collection('expenses');
+  collection.find({}).toArray(function(err, expenses){
 
-	// var tag = request.tag.toString().split(";");
-	// const expense = {
-	// 	item: request.item,
-	// 	category: request.category,
-	// 	amount : request.amount,
-	// 	date: request.date,
-	// 	tag: tag
-	// };
-  	
- //  	collection.insertOne(expense, (err, result) => {
- //  		if (err) return console.log(err);
- //  		console.log(result.ops);
- //  		res.redirect('/');
- //  	});
- 	res.json("we got your request!")
+		expenses.forEach(function(expense){
+			console.log(expense.item + " " + expense.amount);
+		});
+	});
 })
 
+app.listen(port, () => console.log(`Zeno listening on port ${port}!`))
